@@ -16,8 +16,8 @@ const server = app.listen(PORT, () => {
 
 const io = socketIo(server, {
     cors: {
-        origin: "http://localhost:5173",
-        //origin: "https://chat-emot.netlify.app",
+        //origin: "http://localhost:5173",
+        origin: "https://chat-emot.netlify.app",
         methods: ["GET", "POST"]
     }
 });
