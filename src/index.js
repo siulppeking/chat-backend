@@ -16,21 +16,26 @@ const server = app.listen(PORT, () => {
 
 const io = socketIo(server, {
     cors: {
-        //origin: "http://localhost:5173",
-        origin: "https://chat-emot.netlify.app",
+        origin: "http://localhost:5173",
+        //origin: "https://chat-emot.netlify.app",
         methods: ["GET", "POST"]
     }
 });
 
+let users = 0;
+
 io.on('connection', (socket) => {
+    users++;
+    io.emit('userCount', users);
     console.log('a user connected');
 
     socket.on('message', (msg) => {
-        console.log('message: ' + msg);
         io.emit('message', msg);
     });
 
     socket.on('disconnect', () => {
+        users--;
+        io.emit('userCount', users);
         console.log('user disconnected');
     });
 });
